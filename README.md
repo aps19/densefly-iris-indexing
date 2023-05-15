@@ -21,7 +21,7 @@ pip install torch torchvision facenet-pytorch opencv-python scikit-learn
 ```
 Clone the repo:
 ```bash
-git clone https://github.com/username/repository.git
+git clone https://github.com/username/repository.git](https://github.com/aps19/densefly-iris-indexing.git
 ```
 Running the scripts
 
