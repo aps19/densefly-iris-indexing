@@ -1,6 +1,6 @@
 # Fast Similarity Search In large scale iris recognition
 
-This repository contains the implementation of the DenseFly algorithm for iris recognition.
+This repository contains the implementation of the "Fast Similarity Search in Large Scale Iris Recognition".
 
 ## Getting Started
 
