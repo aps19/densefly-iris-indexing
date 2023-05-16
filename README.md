@@ -32,7 +32,7 @@ python prepare_data.py
 
 Finetune Feature Extractor
 ```bash
-python finetuning.py
+python finetuning_model.py
 ```
 
 DenseFly Hashing
