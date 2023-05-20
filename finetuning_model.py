@@ -19,7 +19,7 @@ class IrisDataset(Dataset):
     def __getitem__(self, index):
         img_path = os.path.join(self.root_dir, self.annotations.iloc[index, 0])
         image = Image.open(img_path).convert("RGB")
-        y_label = torch.tensor(float(self.annotations.iloc[index, 1:]))
+        y_label = torch.tensor(int(self.annotations.iloc[index, 1]))
         
         if self.transform:
             image = self.transform(image)
@@ -28,14 +28,14 @@ class IrisDataset(Dataset):
 
 
 class IrisModel:
-    def __init__(self):
+    def __init__(self, num_classes):
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.model = models.resnet50(pretrained=True)
         for param in self.model.parameters():
             param.requires_grad = False
-        self.model.fc = nn.Linear(2048, 2)
+        self.model.fc = nn.Linear(2048, num_classes)
         self.model.to(self.device)
-        self.criterion = nn.MSELoss()
+        self.criterion = nn.CrossEntropyLoss()
         self.optimizer = optim.Adam(self.model.fc.parameters(), lr=0.001)
         self.epochs = 10
 
@@ -71,6 +71,9 @@ class IrisModel:
 
 
 def main():
+    # Define the number of classes in your task
+    num_classes = 3  # replace with your actual number of classes
+
     # Transforms
     data_transforms = transforms.Compose([
         transforms.Resize((224, 224)),
@@ -92,7 +95,7 @@ def main():
     val_loader = DataLoader(dataset=val_dataset, batch_size=4, shuffle=False)
 
     # Define the model
-    model = IrisModel()
+    model = IrisModel(num_classes)
 
     # Train the model
     model.fit(train_loader, val_loader)
